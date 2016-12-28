@@ -6,5 +6,5 @@
 //  Copyright © 2015 Avans Hogeschool, 's-Hertogenbosch. All rights reserved.
 //
 
-//#include "Player.hpp"
-using namespace std;
+#include "Player.h"
+
