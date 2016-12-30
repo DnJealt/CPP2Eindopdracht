@@ -12,18 +12,18 @@
 #include <utility>
 
 #include "Socket.h"
-#include "Player.h"
+#include "Player.hpp"
 
 class ClientInfo {
     Socket _socket;
-    Player _player;
+    std::shared_ptr<Player> _player;
 public:
-    ClientInfo(Socket socket, Player player)
+    ClientInfo(Socket socket, std::shared_ptr<Player> player)
         : _socket{std::move(socket)}, _player{std::move(player)} {}
     Socket& get_socket() { return _socket; }
     const Socket& get_socket() const { return _socket; }
-    Player& get_player() { return _player; }
-    const Player& get_player() const { return _player; }
+    std::shared_ptr<Player> get_player() { return _player; }
+    const std::shared_ptr<Player> get_player() const { return _player; }
 };
 
 #endif

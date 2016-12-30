@@ -6,5 +6,5 @@
 //  Copyright © 2015 Avans Hogeschool, 's-Hertogenbosch. All rights reserved.
 //
 
-#include "Player.h"
+#include "Player.hpp"
 

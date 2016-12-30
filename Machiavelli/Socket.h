@@ -75,8 +75,9 @@ class ServerSocket : public Socket
 //=============================================================================
 {
 public:
-    ServerSocket(int port);
+    ServerSocket(int ports);
     Socket accept();
+	//std::unique_ptr<Socket> accept();
 };
 
 //=============================================================================
