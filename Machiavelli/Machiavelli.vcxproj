@@ -150,7 +150,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientCommand.h" />
-    <ClInclude Include="ClientInfo.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="Socket.h" />

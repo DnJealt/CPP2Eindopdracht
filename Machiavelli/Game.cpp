@@ -24,3 +24,40 @@ void Game::deletePlayer(std::shared_ptr<Player> player)
 		players.erase(it);
 	}
 }
+
+void Game::handleCommand(ClientCommand command)
+{
+	
+	////start the game
+	//try {
+	//	std::string cmd = command.get_cmd();
+	//	if (cmd == "start") {
+	//		if (players.size() < 2) {
+	//			//send message start is not possible
+	//		}
+
+	//		//else start the game...
+	//	}
+	//	else if (cmd == "help") {
+
+	//	}
+	//	else if (std::all_of(cmd.begin(), cmd.end(), ::isdigit)) {
+	//		//handle the command 
+	//	}
+	//	else {
+	//		client << player->get_name() << ", you wrote: '" << command.get_cmd() << "', but I'll ignore that for now.\r\n";
+	//	}
+	//}
+	//catch (const exception& ex) {
+	//	cerr << "*** exception in consumer thread for player " << command.get_player()->get_name() << '\n';
+	//	if (command.get_client()->is_open()) {
+	//		command.get_client()->write("Sorry, something went wrong during handling of your request.\r\n");
+	//	}
+	//}
+	//catch (...) {
+	//	cerr << "*** exception in consumer thread for player " << command.get_player()->get_name() << '\n';
+	//	if (command.get_client()->is_open()) {
+	//		command.get_client()->write("Sorry, something went wrong during handling of your request.\r\n");
+	//	}
+	//}
+}

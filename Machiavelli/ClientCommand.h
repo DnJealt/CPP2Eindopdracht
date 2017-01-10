@@ -13,20 +13,22 @@
 #include <string>
 #include <memory>
 
-class ClientInfo;
-
+class Player;
+class Socket;
 
 class ClientCommand {
 public:
-    ClientCommand(const std::string& command_text, std::weak_ptr<ClientInfo> client_info)
-    : cmd{command_text}, info{client_info} {}
+    ClientCommand(const std::string& command_text, std::shared_ptr<Player> player, std::shared_ptr<Socket> socket)
+		: cmd{ command_text }, _player{ player }, _socket{ socket } {}
 
     std::string get_cmd() const { return cmd; }
-    std::weak_ptr<ClientInfo> get_client_info() const { return info; }
+	std::shared_ptr<Player> get_player() const { return _player; }
+	std::shared_ptr<Socket> get_socket() const { return _socket; }
 
 private:
     std::string cmd;
-    std::weak_ptr<ClientInfo> info;
+	std::shared_ptr<Player> _player;
+	std::shared_ptr<Socket> _socket;
 };
 
 #endif /* defined(__socketexample__ClientCommand__) */
