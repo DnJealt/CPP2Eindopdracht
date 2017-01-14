@@ -8,6 +8,7 @@
 
 #include "Player.hpp"
 #include "ClientCommand.h"
+#include "Socket.h"
 
 class Game
 {
@@ -17,6 +18,8 @@ public:
 	void addPlayer(std::shared_ptr<Player> player);
 	void deletePlayer(std::shared_ptr<Player> player);
 	void handleCommand(ClientCommand command);
+	void globalMessage(std::string message);
+
 private:
 	std::vector<std::shared_ptr<Player>> players;
 };

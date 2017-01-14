@@ -77,7 +77,7 @@ void handle_client(std::shared_ptr<Socket> client) // this function runs in a se
 			}
 		};
 
-		std::shared_ptr<Player> player{ new Player(name, age) };
+		std::shared_ptr<Player> player{ new Player(name, age, client) };
 
 		// add player to the game
 		machiavelli::game->addPlayer(player);

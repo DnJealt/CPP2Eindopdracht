@@ -8,3 +8,9 @@
 
 #include "Player.hpp"
 
+const Player & Player::operator<<(const std::string & message) const
+{
+	socket->write(message);
+	return *this;
+	// TODO: write message to socket, and return it.
+}
