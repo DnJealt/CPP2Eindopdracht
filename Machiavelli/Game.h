@@ -33,6 +33,7 @@ private:
 	void initGame();
 	void takeGold(std::shared_ptr<Player> player, int amount);
 	void takeCard(std::shared_ptr<Player> player, int amount);
+	void pickCharacters();
 
 	std::string showHelp();
 };

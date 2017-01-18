@@ -2,6 +2,7 @@
 
 Game::Game()
 {
+	gameOver = false;
 }
 
 Game::~Game()
@@ -83,6 +84,7 @@ void Game::playerMessage(std::string message, ClientCommand cmd) {
 
 void Game::startRound()
 {
+	pickCharacters();
 }
 
 void Game::initGame()
@@ -127,6 +129,22 @@ void Game::takeCard(std::shared_ptr<Player> player, int amount)
 		auto card = reader->getBuildingCard();
 		player->addBuildingCard(card);
 		*(player) << "\r\n\t" << card->getName() << " (" << card->getColor() << ", " << std::to_string(card->getPrice()) << ")" << "\r\n";
+	}
+}
+
+void Game::pickCharacters()
+{
+	//// clear characters by every player
+	//for each (auto player in this->players)
+	//{
+	//	player->getCharacters().clear();
+	//}
+
+	auto characters = reader->getCharactersShuffled();
+	std::shared_ptr<Player> current = king;
+
+	while (characters.size() > 0) {
+		characters = current->pickCharacter(characters);
 	}
 }
 

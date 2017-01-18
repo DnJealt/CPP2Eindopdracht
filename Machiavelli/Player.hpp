@@ -30,6 +30,9 @@ public:
     std::string get_name() const { return name; }
 	int get_age() const { return age; }
 	int amountGold() const { return gold; }
+	std::vector<std::shared_ptr<CharacterCard>> getCharacters();
+	std::vector<std::shared_ptr<CharacterCard>> pickCharacter(std::vector<std::shared_ptr<CharacterCard>> cards);
+	int toChoose(std::vector<std::string> options, std::string);
    	
 	const Player & operator<<(const std::string & message) const;
 private:
