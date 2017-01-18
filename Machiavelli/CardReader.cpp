@@ -8,7 +8,7 @@ CardReader::CardReader()
 
 void CardReader::read(std::string fileName)
 {
-	srand(time(0));
+	srand((unsigned int)time(0));
 	std::ifstream input_file(fileName);
 	std::string line;
 	while (std::getline(input_file, line)) {
@@ -59,6 +59,13 @@ std::vector<std::shared_ptr<CharacterCard>> CardReader::getCharactersShuffled()
 std::vector<std::shared_ptr<BuildingCard>> CardReader::getBuildings()
 {
 	return buildings;
+}
+
+std::shared_ptr<BuildingCard> CardReader::getBuildingCard()
+{
+	auto card = buildings[0];
+	buildings.erase(buildings.begin());
+	return card;
 }
 
 CardReader::~CardReader()

@@ -1,6 +1,5 @@
 #include "Game.h"
 
-
 Game::Game()
 {
 }
@@ -20,8 +19,7 @@ void Game::deletePlayer(std::shared_ptr<Player> player)
 	auto it = std::find_if(players.begin(), players.end(), [&player](const std::shared_ptr<Player>& checkPlayer) {return checkPlayer == player; });
 		
 	if (it != players.end())
-	{
-		it->get()->socket->close();
+	{		
 		players.erase(it);
 	}
 }
@@ -35,18 +33,21 @@ void Game::handleCommand(ClientCommand command)
 		if (cmd == "start") {
 			if (players.size() < 2) {
 				//send message start is not possible
-				globalMessage("fucked. je bent maar in je eentje!");				
+				globalMessage("\nSorry " + command.get_player()->get_name() + ", maar je moet met 2 spelers zijn.");				
 			}
 			else {
 				//start game
 				this->initGame();
+
+				while (!gameOver) {
+					startRound();
+				}
+
+				//count the winner
 			}		
 		}
-		/*else if (cmd == "quit") {
-			command.get_socket()->close();
-		}*/
 		else if (cmd == "help") {
-
+			playerMessage(showHelp(), command);
 		}
 		else if (std::all_of(cmd.begin(), cmd.end(), ::isdigit)) {
 			//handle the command 
@@ -56,15 +57,15 @@ void Game::handleCommand(ClientCommand command)
 		}
 	}
 	catch (const std::exception& ex) {
-		std::cerr << "*** exception in consumer thread for player " << command.get_player()->get_name() << '\n';
-		if (command.get_socket()->is_open()) {
-			command.get_socket()->write("Sorry, something went wrong during handling of your request.\r\n");
+		std::cerr << "*** exception in handle thread for player " << command.get_player()->get_name() << '\n';
+		if (command.get_socket()->is_open()) {		
+			*(command.get_socket()) << "ERROR: " << ex.what() << "\r\n";
 		}
 	}
 	catch (...) {
-		std::cerr << "*** exception in consumer thread for player " << command.get_player()->get_name() << '\n';
+		std::cerr << "*** exception in handle thread for player " << command.get_player()->get_name() << '\n';
 		if (command.get_socket()->is_open()) {
-			command.get_socket()->write("Sorry, something went wrong during handling of your request.\r\n");
+			*(command.get_socket()) << "Sorry, something went wrong during handling of your request.\r\n";
 		}
 	}
 }
@@ -80,15 +81,56 @@ void Game::playerMessage(std::string message, ClientCommand cmd) {
 	*(cmd.get_socket()) << message;
 }
 
+void Game::startRound()
+{
+}
+
 void Game::initGame()
 {
+	int age = 0;
+	//read files
 	reader = std::make_shared<CardReader>();
 	
+	//gold on the table
 	goldCount = 30;
 
-}
-std::string Game::showHelp() {
+	//make oldest player king
+	for each (auto player in this->players)
+	{
+		if (player->get_age() > age) {
+			king = player;
+			age = player->get_age();
+		}
 
+		takeGold(player, 2);
+		takeCard(player, 4);
+		//give every player 2 gold, and 4 cards
+	}
+	
+	globalMessage("De oudste speler is " + king->get_name() + ". Dus die begint en is koning.");
+}
+
+void Game::takeGold(std::shared_ptr<Player> player, int amount)
+{
+	goldCount -= amount;
+	if (goldCount < 0) {
+		amount += goldCount;
+	}
+	player->addGold(amount);
+}
+
+void Game::takeCard(std::shared_ptr<Player> player, int amount)
+{
+	*(player) << "Je 2 goud gekregen en je hebt de volgende 4 bouwkaarten gepakt:\n";
+	for (int i = 0; i < amount; i++)
+	{
+		auto card = reader->getBuildingCard();
+		player->addBuildingCard(card);
+		*(player) << "\r\n\t" << card->getName() << " (" << card->getColor() << ", " << std::to_string(card->getPrice()) << ")" << "\r\n";
+	}
+}
+
+std::string Game::showHelp() {
 	std::string str = "Verloop van een speelbeurt: \r\n";
 	str += "\t- Inkomsten: Neem 2 goudstukken of neem 2 kaarten en leg er 1 af\r\n";
 	str += "\t- Bouwen: Leg 1 bouwkaart neer en betaal de waarde\r\n";
@@ -123,3 +165,5 @@ std::string Game::showHelp() {
 std::vector<std::shared_ptr<Player>> Game::getPlayers() {
 	return players;
 }
+
+

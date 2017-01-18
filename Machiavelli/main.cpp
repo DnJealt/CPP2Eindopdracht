@@ -60,11 +60,11 @@ void consume_command() // runs in its own thread
 void handle_client(std::shared_ptr<Socket> client) // this function runs in a separate thread
 {
     try {
-		client->write("Welcome to Machiavelli server! To quit, type 'quit'.\r\n");
-		client->write("What's your name?\r\n");
+		client->write("Welkom bij Machiavelli server! Om af te sluiten, typ 'quit'.\r\n");
+		client->write("Wat is je naam?\r\n");
 		std::string name{ client->readline() };
 
-		client->write("What's your age?\r\n");
+		client->write("\nHoe oud ben je?\r\n");
 
 		bool valid = false;
 		int age = 0;
@@ -82,7 +82,7 @@ void handle_client(std::shared_ptr<Socket> client) // this function runs in a se
 		// add player to the game
 		machiavelli::game->addPlayer(player);
 		
-		*client << "Welcome, " << player->get_name() << ", Type 'start' to play the game!\r\n";
+		*client << "\nWelkom, " << player->get_name() << ", Typ 'start' om te beginnen!\r\n";
 
         while (true) { // game loop
             try {
@@ -92,7 +92,7 @@ void handle_client(std::shared_ptr<Socket> client) // this function runs in a se
 				std::cerr << '[' << client->get_dotted_ip() << " (" << client->get_socket() << ") " << player->get_name() << "] " << cmd << "\r\n";
 
                 if (cmd == "quit") {
-					client->write("Bye!\r\n");
+					client->write("Daaaag!\r\n");
 
 					// TODO, remove player from game here
 					machiavelli::game->deletePlayer(player);					

@@ -14,25 +14,31 @@
 
 #include "Socket.h"
 #include "Game.h"
+#include "BuildingCard.h"
+#include "CharacterCard.h"
 
 class Player {
 public:
-    Player() {}
-	Player(const std::string& name, const int age, std::shared_ptr<Socket> socket) : name{ name }, age{ age }, socket{socket} {}
+	Player(const std::string& name, const int age, std::shared_ptr<Socket> socket) : name{ name }, age{ age }, socket{ socket }, gold{ 0 } {}
+
+	void set_name(const std::string& new_name) { name = new_name; }
+	void addGold(int amount) { gold += amount; }
+	void removeGold(int amount) { gold -= amount; }
+	void addBuildingCard(std::shared_ptr<BuildingCard> card) { buildingCards.push_back(card); }
+	void addCharacterCard(std::shared_ptr<CharacterCard> card) { characterCards.push_back(card); }
 
     std::string get_name() const { return name; }
-	int get_age() const { return age; };
-    void set_name(const std::string& new_name) { name = new_name; }
-
-	void quit();
-
-	//operator overloading player to write message to socket.
+	int get_age() const { return age; }
+	int amountGold() const { return gold; }
+   	
 	const Player & operator<<(const std::string & message) const;
-	std::shared_ptr<Socket> socket;
-
 private:
+	std::shared_ptr<Socket> socket;
     std::string name;
 	int age;
+	int gold;
+	std::vector<std::shared_ptr<BuildingCard>> buildingCards;
+	std::vector<std::shared_ptr<CharacterCard>> characterCards;
 };
 
 #endif /* Player_hpp */

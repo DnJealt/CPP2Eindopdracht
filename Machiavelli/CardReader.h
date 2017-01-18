@@ -30,7 +30,7 @@ public:
 
 	//buildings
 	std::vector<std::shared_ptr<BuildingCard>> getBuildings();
-
+	std::shared_ptr<BuildingCard> getBuildingCard();
 
 };
 
