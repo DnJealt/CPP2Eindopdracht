@@ -9,6 +9,7 @@
 #include "Player.hpp"
 #include "ClientCommand.h"
 #include "Socket.h"
+#include "CardReader.h"
 
 class Game
 {
@@ -22,5 +23,9 @@ public:
 
 private:
 	std::vector<std::shared_ptr<Player>> players;
+	void initGame();
+
+	std::shared_ptr<CardReader> buildingCardReader;
+	std::shared_ptr<CardReader> characterCardReader;
 };
 

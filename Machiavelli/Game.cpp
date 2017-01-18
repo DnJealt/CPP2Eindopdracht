@@ -38,6 +38,7 @@ void Game::handleCommand(ClientCommand command)
 			}
 			else {
 				//start game
+				this->initGame();
 			}		
 		}
 		else if (cmd == "help") {
@@ -70,6 +71,12 @@ void Game::globalMessage(std::string message)
 	for (auto player : players) {
 		*player << message << "\r\n";
 	}
+}
+
+void Game::initGame()
+{
+	bg = std::make_shared<BuildingcardReader>();
+	cr = std::make_shared<CharacterReader>();
 }
 
 
