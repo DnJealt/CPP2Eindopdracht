@@ -34,10 +34,11 @@ void Game::handleCommand(ClientCommand command)
 		if (cmd == "start") {
 			if (players.size() < 2) {
 				//send message start is not possible
-				globalMessage("fucked. je bent maar in je eentje!");
+				globalMessage("fucked. je bent maar in je eentje!");				
 			}
-
-			//else start the game...
+			else {
+				//start game
+			}		
 		}
 		else if (cmd == "help") {
 
@@ -46,7 +47,7 @@ void Game::handleCommand(ClientCommand command)
 			//handle the command 
 		}
 		else {
-			// waarom dit pointer teken????????????
+			// moet zeggen tegen de compiler dat het een pointer is. 
 			*command.get_socket() << command.get_player()->get_name() << ", you wrote: '" << command.get_cmd() << "', but I'll ignore that for now.\r\n";
 		}
 	}

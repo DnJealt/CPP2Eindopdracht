@@ -229,6 +229,7 @@ ServerSocket::ServerSocket(int port)
     throw_if_min1(::listen(sock, 100));  // the number of clients that can be queued
 }
 
+//use of unique pointer
 std::unique_ptr<Socket> ServerSocket::accept()
 {
     struct sockaddr client_addr;

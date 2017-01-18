@@ -31,14 +31,14 @@ void consume_command() // runs in its own thread
     try {
         while (true) {
             ClientCommand command {queue.get()}; // will block here unless there are still command objects in the queue
+
 			std::shared_ptr<Player> player{ command.get_player() };
-			std::shared_ptr<Socket> client{ command.get_socket() };			           
+			std::shared_ptr<Socket> client{ command.get_socket() };			   
+
                 try {
                     // TODO handle command here
 					std::thread commandHandler { &Game::handleCommand, machiavelli::game, command };
-					commandHandler.detach();
-
-					//client << player->get_name() << ", you wrote: '" << command.get_cmd() << "', but I'll ignore that for now.\r\n";
+					commandHandler.detach();					
                 } catch (const std::exception& ex) {
 					std::cerr << "*** exception in consumer thread for player " << player->get_name() << ": " << ex.what() << '\n';
                     if (client->is_open()) {
@@ -49,8 +49,7 @@ void consume_command() // runs in its own thread
                     if (client->is_open()) {
                         client->write("Sorry, something went wrong during handling of your request.\r\n");
                     }
-                }
-            
+                }            
         }
     } catch (...) {
 		std::cerr << "consume_command crashed\n";
@@ -77,6 +76,7 @@ void handle_client(std::shared_ptr<Socket> client) // this function runs in a se
 			}
 		};
 
+		//shared pointer omdat meerdere mensen het player object gaan gebruiken. 
 		std::shared_ptr<Player> player{ new Player(name, age, client) };
 
 		// add player to the game
