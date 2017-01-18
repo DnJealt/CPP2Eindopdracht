@@ -25,7 +25,7 @@ std::vector<std::shared_ptr<CharacterCard>> Player::pickCharacter(std::vector<st
 	int indexToDelete = toChoose(availableCharacters, messageToShow);
 
 	cards.erase(cards.begin() + indexToDelete);
-
+	availableCharacters.erase(availableCharacters.begin() + indexToDelete);
 
 	return cards;
 }
