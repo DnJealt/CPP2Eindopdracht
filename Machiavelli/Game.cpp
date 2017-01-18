@@ -21,6 +21,7 @@ void Game::deletePlayer(std::shared_ptr<Player> player)
 		
 	if (it != players.end())
 	{
+		it->get()->socket->close();
 		players.erase(it);
 	}
 }
@@ -41,6 +42,9 @@ void Game::handleCommand(ClientCommand command)
 				this->initGame();
 			}		
 		}
+		/*else if (cmd == "quit") {
+			command.get_socket()->close();
+		}*/
 		else if (cmd == "help") {
 
 		}
@@ -72,6 +76,10 @@ void Game::globalMessage(std::string message)
 	}
 }
 
+void Game::playerMessage(std::string message, ClientCommand cmd) {
+	*(cmd.get_socket()) << message;
+}
+
 void Game::initGame()
 {
 	reader = std::make_shared<CardReader>();
@@ -79,5 +87,39 @@ void Game::initGame()
 	goldCount = 30;
 
 }
+std::string Game::showHelp() {
 
+	std::string str = "Verloop van een speelbeurt: \r\n";
+	str += "\t- Inkomsten: Neem 2 goudstukken of neem 2 kaarten en leg er 1 af\r\n";
+	str += "\t- Bouwen: Leg 1 bouwkaart neer en betaal de waarde\r\n";
+	str += "\tKaraktereigenschap: Op elk moment te gebruiken\r\n";
+	str += "\r\n";
 
+	str += "1 - Moordenaar\r\n";
+	str += "\tVermoordt een ander karakter\r\n";
+	str += "2 - Dief\r\n";
+	str += "\tSteelt van een andere speler\r\n";
+	str += "3 - Magier\r\n";
+	str += "\tRuilt bouwkaarten om\r\n";
+	str += "4 - Koning (geel)\r\n";
+	str += "\tBegint de volgende beurt\r\n";
+	str += "\tOntvangt van monumenten\r\n";
+	str += "5 - Prediker (blauw)\r\n";
+	str += "\tIs beschermd tegen de Condottiere\r\n";
+	str += "\tOntvangt van kerkelijke gebouwen\r\n";
+	str += "6 - Koopman (groen)\r\n";
+	str += "\tOntvangt een extra goudstuk\r\n";
+	str += "\tOntvangt van commerciele gebouwen\r\n";
+	str += "7 - Bouwmeester\r\n";
+	str += "\tTrekt twee extra kaarten\r\n";
+	str += "\tMag drie gebouwen bouwen\r\n";
+	str += "8 - Condottiere(rood)\r\n";
+	str += "\tVernietigt een gebouw\r\n";
+	str += "\tOntvangt van alle militaire gebouwen\r\n";
+
+	return str;
+}
+
+std::vector<std::shared_ptr<Player>> Game::getPlayers() {
+	return players;
+}

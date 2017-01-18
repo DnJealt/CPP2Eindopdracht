@@ -95,10 +95,21 @@ void handle_client(std::shared_ptr<Socket> client) // this function runs in a se
 					client->write("Bye!\r\n");
 
 					// TODO, remove player from game here
-					machiavelli::game->deletePlayer(player);
+					machiavelli::game->deletePlayer(player);					
 
                     break; // out of game loop, will end this thread and close connection
                 }
+				else if (cmd == "quitall") {
+					client->write("Houdoe!");
+
+					auto players = machiavelli::game->getPlayers();
+
+					for (auto i = 0; i < players.size(); ++i) {
+						machiavelli::game->deletePlayer(players.at(i));
+					}
+					break;
+				}
+				
 
                 ClientCommand command {cmd, player, client};
                 queue.put(command);
@@ -119,6 +130,7 @@ void handle_client(std::shared_ptr<Socket> client) // this function runs in a se
     } catch (...) {
 		std::cerr << "handle_client crashed\n";
     }
+	exit(0);
 }
 
 int main(int argc, const char * argv[])

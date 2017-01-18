@@ -24,12 +24,15 @@ public:
 	int get_age() const { return age; };
     void set_name(const std::string& new_name) { name = new_name; }
 
+	void quit();
+
 	//operator overloading player to write message to socket.
 	const Player & operator<<(const std::string & message) const;
+	std::shared_ptr<Socket> socket;
+
 private:
     std::string name;
 	int age;
-	std::shared_ptr<Socket> socket;
 };
 
 #endif /* Player_hpp */
