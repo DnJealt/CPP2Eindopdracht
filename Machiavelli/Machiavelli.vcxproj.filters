@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Cards">
+      <UniqueIdentifier>{abea82d6-f753-4466-9183-eb4c562ad3b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Cards">
+      <UniqueIdentifier>{38697a64-dcd1-48ec-a892-fcc19d17d9fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp">
@@ -30,17 +36,17 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BuildingCard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterCard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BaseCard.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Cards</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildingCard.cpp">
+      <Filter>Source Files\Cards</Filter>
     </ClCompile>
     <ClCompile Include="CardReader.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Cards</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterCard.cpp">
+      <Filter>Source Files\Cards</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -62,17 +68,17 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BuildingCard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterCard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BaseCard.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Cards</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildingCard.h">
+      <Filter>Header Files\Cards</Filter>
     </ClInclude>
     <ClInclude Include="CardReader.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Cards</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterCard.h">
+      <Filter>Header Files\Cards</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

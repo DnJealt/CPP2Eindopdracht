@@ -47,9 +47,8 @@ void Game::handleCommand(ClientCommand command)
 		else if (std::all_of(cmd.begin(), cmd.end(), ::isdigit)) {
 			//handle the command 
 		}
-		else {
-			// moet zeggen tegen de compiler dat het een pointer is. 
-			*command.get_socket() << command.get_player()->get_name() << ", you wrote: '" << command.get_cmd() << "', but I'll ignore that for now.\r\n";
+		else {			
+			*(command.get_socket()) << command.get_player()->get_name() << ", you wrote: '" << command.get_cmd() << "', but I'll ignore that for now.\r\n";
 		}
 	}
 	catch (const std::exception& ex) {
@@ -75,8 +74,10 @@ void Game::globalMessage(std::string message)
 
 void Game::initGame()
 {
-	characterCardReader = std::make_shared<CardReader>("character");
-	buildingCardReader = std::make_shared<CardReader>("build");
+	reader = std::make_shared<CardReader>();
+	
+	goldCount = 30;
+
 }
 
 
