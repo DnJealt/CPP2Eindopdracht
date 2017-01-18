@@ -63,4 +63,6 @@ std::vector<std::shared_ptr<BuildingCard>> CardReader::getBuildings()
 
 CardReader::~CardReader()
 {
+	buildings.clear();
+	characters.clear();
 }
