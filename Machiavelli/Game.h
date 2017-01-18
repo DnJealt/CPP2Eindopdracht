@@ -19,10 +19,14 @@ public:
 	void deletePlayer(std::shared_ptr<Player> player);
 	void handleCommand(ClientCommand command);
 	void globalMessage(std::string message);
+	void playerMessage(std::string message, ClientCommand cmd);
+
+	std::vector<std::shared_ptr<Player>> getPlayers();
 
 private:
 	std::vector<std::shared_ptr<Player>> players;
 	void initGame();
+	std::string showHelp();
 
 	std::shared_ptr<CardReader> buildingCardReader;
 	std::shared_ptr<CardReader> characterCardReader;
