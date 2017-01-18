@@ -75,8 +75,8 @@ void Game::globalMessage(std::string message)
 
 void Game::initGame()
 {
-	bg = std::make_shared<BuildingcardReader>();
-	cr = std::make_shared<CharacterReader>();
+	characterCardReader = std::make_shared<CardReader>("character");
+	buildingCardReader = std::make_shared<CardReader>("build");
 }
 
 

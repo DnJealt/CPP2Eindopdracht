@@ -13,15 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Cards">
-      <UniqueIdentifier>{d689b07e-54b6-44db-9e11-3b100a9f8bfc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Cards\Building">
-      <UniqueIdentifier>{d5179b29-3ad6-4521-80bb-2f549a642306}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Cards\Character">
-      <UniqueIdentifier>{6eade702-8a21-42a0-9cf4-94c2f2d4d156}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp">
@@ -37,6 +28,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildingCard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterCard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseCard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CardReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,12 +62,24 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BuildingCard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterCard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseCard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CardReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\Downloads\Bouwkaarten.csv">
+    <None Include="bouwkaarten.csv">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\..\..\..\Downloads\karakterkaarten.csv">
+    <None Include="karakterkaarten.csv">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

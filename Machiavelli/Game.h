@@ -8,7 +8,6 @@
 
 #include "Player.hpp"
 #include "ClientCommand.h"
-#include "Socket.h"
 #include "CardReader.h"
 
 class Game
