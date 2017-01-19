@@ -50,7 +50,7 @@ void Game::handleCommand(ClientCommand command)
 			playerMessage(showHelp(), command);
 		}
 		else if (std::all_of(cmd.begin(), cmd.end(), ::isdigit)) {
-			//handle the command 
+			command.get_player()->pickCommand(command.get_cmd());		
 		}
 		else {			
 			*(command.get_socket()) << command.get_player()->get_name() << ", you wrote: '" << command.get_cmd() << "', but I'll ignore that for now.\r\n";
@@ -152,6 +152,7 @@ void Game::pickCharacters()
 
 	while (characters.size() > 0) {		
 		//pick characters
+		current->setPlayerBusy(true);
 		for each (auto player in players)
 		{
 			if (player != current) {
@@ -160,8 +161,11 @@ void Game::pickCharacters()
 			}				
 		}		
 		characters = current->pickCharacter(characters);
+		current->setPlayerBusy(false);
+		
 
 		current = waitingPlayer(current);
+
 	}
 }
 

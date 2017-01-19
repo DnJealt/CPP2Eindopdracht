@@ -9,6 +9,7 @@
 #include "Player.hpp"
 #include "ClientCommand.h"
 #include "CardReader.h"
+#include "Choose.h"
 
 class Game
 {
@@ -29,6 +30,7 @@ private:
 	std::shared_ptr<Player> king;
 	std::shared_ptr<CardReader> reader;
 	std::vector<std::shared_ptr<Player>> players;
+
 
 	void initGame();
 	void takeGold(std::shared_ptr<Player> player, int amount);

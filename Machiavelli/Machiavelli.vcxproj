@@ -146,6 +146,7 @@
     <ClCompile Include="BuildingCard.cpp" />
     <ClCompile Include="CardReader.cpp" />
     <ClCompile Include="CharacterCard.cpp" />
+    <ClCompile Include="Choose.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="BuildingCard.h" />
     <ClInclude Include="CardReader.h" />
     <ClInclude Include="CharacterCard.h" />
+    <ClInclude Include="Choose.h" />
     <ClInclude Include="ClientCommand.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Player.hpp" />

@@ -48,6 +48,9 @@
     <ClCompile Include="CharacterCard.cpp">
       <Filter>Source Files\Cards</Filter>
     </ClCompile>
+    <ClCompile Include="Choose.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientCommand.h">
@@ -79,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="CharacterCard.h">
       <Filter>Header Files\Cards</Filter>
+    </ClInclude>
+    <ClInclude Include="Choose.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

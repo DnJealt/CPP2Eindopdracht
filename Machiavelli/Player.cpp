@@ -11,8 +11,8 @@
 std::vector<std::shared_ptr<CharacterCard>> Player::pickCharacter(std::vector<std::shared_ptr<CharacterCard>> cards)
 {
 	//show available cards
-	std::string messageToShow = "Deze kaarten zijn nog beschikbaar:";
 	std::vector<std::string> availableCharacters;
+	std::string messageToShow = "Deze kaarten zijn nog beschikbaar:";	
 	messageToShow += "\r\n";
 	for (int i = 0; i < cards.size(); ++i)
 	{
@@ -23,7 +23,8 @@ std::vector<std::shared_ptr<CharacterCard>> Player::pickCharacter(std::vector<st
 	//afleggen
 	messageToShow += "\r\nKies welk karakter je af wilt leggen.\r\n";
 
-	int indexToDelete = toChoose(availableCharacters, messageToShow);
+	choose = std::make_shared<Choose>(messageToShow, availableCharacters, socket);
+	int indexToDelete = choose->activate();
 
 	cards.erase(cards.begin() + indexToDelete);
 	availableCharacters.erase(availableCharacters.begin() + indexToDelete);
@@ -31,7 +32,8 @@ std::vector<std::shared_ptr<CharacterCard>> Player::pickCharacter(std::vector<st
 	//1 kiezen
 	messageToShow = "\r\nKies welk karakter je wilt kiezen\r\n";
 
-	int chosenIndex = toChoose(availableCharacters, messageToShow);
+	choose = std::make_shared<Choose>(messageToShow, availableCharacters, socket);
+	int chosenIndex = choose->activate();
 	
 	addCharacterCard(cards.at(chosenIndex));
 
@@ -42,36 +44,28 @@ std::vector<std::shared_ptr<CharacterCard>> Player::pickCharacter(std::vector<st
 	return cards;
 }
 
-
-
-int Player::toChoose(std::vector<std::string> availableCharacters, std::string messageToShow)
+void Player::pickCommand(std::string command)
 {
-	std::string userInput;
-	int input;
-	*(this) << "\r\n" << messageToShow << "\r\n";
-	for (int i = 0; i < availableCharacters.size(); ++i)
-	{
-		*(this) << std::to_string(i) << ": " << availableCharacters.at(i) << "\r\n";
-	}
-
-	//BUG, registreert na 1x fout de input niet meer..
-	bool picked = false;
-	while (!picked) 
-	{
-		userInput = socket->readline();
-		input = std::stoi(userInput);
-		if (input < availableCharacters.size() - 1 && input >= 0){
-			picked = true;
-			return input;
-		}
-		else {
-			*(this) << "Deze optie bestaat niet. Probeer het nog een keer.\n";
+	if (choose) {
+		if (choose->pick(command)) {
+			choose = nullptr;
 		}
 	}
-	
-	return input;
+	else {
+		*socket << "Dit is niet jouw beurt: '" << name << ".\r\n";
+	}
 }
 
+bool Player::isPlayerBusy()
+{
+	return _busyPlayer;
+}
+
+
+void Player::setPlayerBusy(bool value)
+{
+	this->_busyPlayer = value;
+}
 
 std::vector<std::shared_ptr<CharacterCard>> Player::getCharacters()
 {
