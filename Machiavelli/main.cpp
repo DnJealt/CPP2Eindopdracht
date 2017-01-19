@@ -161,7 +161,7 @@ int main(int argc, const char * argv[])
 			std::cerr << "problems, problems, but: keep calm and carry on!\n";
         }
     }
-    consumer.join();
+    //consumer.join();
     return 0;
 }
 

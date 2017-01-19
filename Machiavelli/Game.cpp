@@ -29,7 +29,6 @@ void Game::handleCommand(ClientCommand command)
 {	
 	//start the game
 	try {
-		std::cout << command.get_cmd();
 		std::string cmd = command.get_cmd();
 		if (cmd == "start") {
 			if (players.size() < 2) {
@@ -85,6 +84,8 @@ void Game::playerMessage(std::string message, ClientCommand cmd) {
 void Game::startRound()
 {
 	pickCharacters();
+
+
 }
 
 void Game::initGame()

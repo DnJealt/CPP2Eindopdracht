@@ -46,7 +46,8 @@ std::vector<std::shared_ptr<CharacterCard>> Player::pickCharacter(std::vector<st
 
 int Player::toChoose(std::vector<std::string> availableCharacters, std::string messageToShow)
 {
-	int userInput;
+	std::string userInput;
+	int input;
 	*(this) << "\r\n" << messageToShow << "\r\n";
 	for (int i = 0; i < availableCharacters.size(); ++i)
 	{
@@ -55,17 +56,20 @@ int Player::toChoose(std::vector<std::string> availableCharacters, std::string m
 
 	//BUG, registreert na 1x fout de input niet meer..
 	bool picked = false;
-	while (!picked) {
-		userInput = std::stoi(socket->readline());
-		if (userInput < availableCharacters.size() - 1 && userInput >= 0){
+	while (!picked) 
+	{
+		userInput = socket->readline();
+		input = std::stoi(userInput);
+		if (input < availableCharacters.size() - 1 && input >= 0){
 			picked = true;
+			return input;
 		}
 		else {
 			*(this) << "Deze optie bestaat niet. Probeer het nog een keer.\n";
 		}
 	}
 	
-	return userInput;
+	return input;
 }
 
 
