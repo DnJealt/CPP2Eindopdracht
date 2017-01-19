@@ -37,8 +37,7 @@ std::vector<std::shared_ptr<CharacterCard>> Player::pickCharacter(std::vector<st
 
 	cards.erase(cards.begin() + chosenIndex);
 	availableCharacters.erase(availableCharacters.begin() + chosenIndex);
-
-
+	
 	//overgebleven karakters doorgeven
 	return cards;
 }

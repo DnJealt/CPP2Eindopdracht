@@ -134,17 +134,48 @@ void Game::takeCard(std::shared_ptr<Player> player, int amount)
 
 void Game::pickCharacters()
 {
-	//// clear characters by every player
-	//for each (auto player in this->players)
-	//{
-	//	player->getCharacters().clear();
-	//}
+	// clear characters by every player
+	for each (auto player in this->players)
+	{
+		player->getCharacters().clear();
+	}
 
 	auto characters = reader->getCharactersShuffled();
 	std::shared_ptr<Player> current = king;
 
+	//reset characters
+	for (auto character : characters) {
+		//character->setStolenFrom(false); need to implement
+		character->setDead(false);
+	}
+
 	while (characters.size() > 0) {
+		for each (auto player in players)
+		{
+			if (player != current) {
+				*(player) << "Even geduld, " << current->get_name() << " is karakters aan het kiezen/wegleggen.";
+			}				
+		}
+		
 		characters = current->pickCharacter(characters);
+		bool next = false;
+		bool picked = false;
+		int index = 0;
+		while (!picked) {
+			auto player = players.at(index);
+			if (next) {
+				current = player;
+				break;
+			}
+			else if (player == current) {
+				next = true;
+			}
+			index++;
+			if (index >= players.size()) {
+				index = 0;
+			}
+		}
+
 	}
 }
 
