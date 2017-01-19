@@ -36,5 +36,6 @@ private:
 	void pickCharacters();
 
 	std::string showHelp();
+	std::shared_ptr<Player> waitingPlayer(std::shared_ptr<Player> player);
 };
 

@@ -42,6 +42,8 @@ std::vector<std::shared_ptr<CharacterCard>> Player::pickCharacter(std::vector<st
 	return cards;
 }
 
+
+
 int Player::toChoose(std::vector<std::string> availableCharacters, std::string messageToShow)
 {
 	int userInput;
@@ -65,7 +67,6 @@ int Player::toChoose(std::vector<std::string> availableCharacters, std::string m
 	
 	return userInput;
 }
-
 
 
 std::vector<std::shared_ptr<CharacterCard>> Player::getCharacters()

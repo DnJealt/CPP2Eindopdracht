@@ -143,40 +143,36 @@ void Game::pickCharacters()
 	auto characters = reader->getCharactersShuffled();
 	std::shared_ptr<Player> current = king;
 
-	//reset characters
+	//reset each character
 	for (auto character : characters) {
-		//character->setStolenFrom(false); need to implement
+		character->setStolenFrom(false);
 		character->setDead(false);
 	}
 
-	while (characters.size() > 0) {
+	while (characters.size() > 0) {		
+		//pick characters
 		for each (auto player in players)
 		{
 			if (player != current) {
+				// set next player to do the same and tell player other player is picking				
 				*(player) << "Even geduld, " << current->get_name() << " is karakters aan het kiezen/wegleggen.";
 			}				
-		}
-		
+		}		
 		characters = current->pickCharacter(characters);
-		bool next = false;
-		bool picked = false;
-		int index = 0;
-		while (!picked) {
-			auto player = players.at(index);
-			if (next) {
-				current = player;
-				break;
-			}
-			else if (player == current) {
-				next = true;
-			}
-			index++;
-			if (index >= players.size()) {
-				index = 0;
-			}
-		}
 
+		current = waitingPlayer(current);
 	}
+}
+
+std::shared_ptr<Player> Game::waitingPlayer(std::shared_ptr<Player> current)
+{
+	for each (auto player in players)
+	{
+		if (player != current)
+			return player;
+	}
+
+	return nullptr;
 }
 
 std::string Game::showHelp() {
