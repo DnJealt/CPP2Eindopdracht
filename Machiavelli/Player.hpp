@@ -25,8 +25,8 @@ public:
 	void set_name(const std::string& new_name) { name = new_name; }
 	void addGold(int amount) { gold += amount; }
 	void removeGold(int amount) { gold -= amount; }
-	void addBuildingCard(std::shared_ptr<BuildingCard> card) { buildingCards.push_back(card); }
-	void addCharacterCard(std::shared_ptr<CharacterCard> card) { characterCards.push_back(card); }
+	void addBuildingCard(std::shared_ptr<BuildingCard> card) { buildingCards.emplace_back(card); }
+	void addCharacterCard(std::shared_ptr<CharacterCard> card) { characterCards.emplace_back(card); }
 	void setPlayerBusy(bool value);
 
     std::string get_name() const { return name; }
@@ -36,6 +36,8 @@ public:
 	std::vector<std::shared_ptr<CharacterCard>> pickCharacter(std::vector<std::shared_ptr<CharacterCard>> cards);
 	void pickCommand(std::string command);
 	bool isPlayerBusy();
+
+	void turnWith(std::shared_ptr<CharacterCard> character);
 	   	
 	const Player & operator<<(const std::string & message) const;
 private:

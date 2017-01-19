@@ -34,10 +34,11 @@ private:
 
 	void iIzAH4x0r();
 
+	void doTurn();
 
 	void initGame();
 	void takeGold(std::shared_ptr<Player> player, int amount);
-	void takeCard(std::shared_ptr<Player> player, int amount);
+	void takeCard(std::shared_ptr<Player> player, const int amount);
 	void pickCharacters();
 
 	std::string showHelp();

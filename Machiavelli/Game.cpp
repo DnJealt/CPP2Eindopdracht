@@ -94,6 +94,7 @@ void Game::startRound()
 	}
 
 
+	doTurn();
 
 
 }
@@ -109,16 +110,12 @@ void Game::iIzAH4x0r() {
 		character->setDead(false);
 	}
 
-	players[0]->getCharacters().emplace_back(characters[0]);
-	players[0]->getCharacters().emplace_back(characters[1]);
-	players[0]->getCharacters().emplace_back(characters[2]);
-	players[0]->getCharacters().emplace_back(characters[3]);
+	// Give each player 2 cards
+	players[0]->addCharacterCard(characters[0]);
+	players[0]->addCharacterCard(characters[1]);
 
-	players[1]->getCharacters().emplace_back(characters[4]);
-	players[1]->getCharacters().emplace_back(characters[5]);
-	players[1]->getCharacters().emplace_back(characters[6]);
-	players[1]->getCharacters().emplace_back(characters[7]);
-
+	players[1]->addCharacterCard(characters[4]);
+	players[1]->addCharacterCard(characters[5]);
 }
 
 void Game::initGame()
@@ -155,7 +152,7 @@ void Game::takeGold(std::shared_ptr<Player> player, int amount)
 	player->addGold(amount);
 }
 
-void Game::takeCard(std::shared_ptr<Player> player, int amount)
+void Game::takeCard(std::shared_ptr<Player> player, const int amount)
 {
 	*(player) << "Je 2 goud gekregen en je hebt de volgende 4 bouwkaarten gepakt:\n";
 	for (int i = 0; i < amount; i++)
@@ -198,7 +195,14 @@ void Game::pickCharacters()
 		
 
 		current = waitingPlayer(current);
+	}
+}
 
+void Game::doTurn() {
+	for each(auto player in this->players) {
+		for each(auto character in player->getCharacters()) {
+			player->turnWith(character);
+		}
 	}
 }
 
@@ -215,30 +219,29 @@ std::shared_ptr<Player> Game::waitingPlayer(std::shared_ptr<Player> current)
 
 std::string Game::showHelp() {
 	std::string str = "Verloop van een speelbeurt: \r\n";
-	str += "\t- Inkomsten: Neem 2 goudstukken of neem 2 kaarten en leg er 1 af\r\n";
+	str += "\t- Inkomsten: Neem 2 goudstukken of pak 2 kaarten en leg er 1 af\r\n";
 	str += "\t- Bouwen: Leg 1 bouwkaart neer en betaal de waarde\r\n";
-	str += "\tKaraktereigenschap: Op elk moment te gebruiken\r\n";
-	str += "\r\n";
+	str += "\tKaraktereigenschap: Op elk moment te gebruiken\r\n\r\n";
 
-	str += "1 - Moordenaar\r\n";
+	str += "1 - Moordenaar \r\n";
 	str += "\tVermoordt een ander karakter\r\n";
-	str += "2 - Dief\r\n";
+	str += "2 - Dief \r\n";
 	str += "\tSteelt van een andere speler\r\n";
-	str += "3 - Magier\r\n";
+	str += "3 - Magier \r\n";
 	str += "\tRuilt bouwkaarten om\r\n";
-	str += "4 - Koning (geel)\r\n";
+	str += "4 - Koning \r\n";
 	str += "\tBegint de volgende beurt\r\n";
 	str += "\tOntvangt van monumenten\r\n";
-	str += "5 - Prediker (blauw)\r\n";
+	str += "5 - Prediker \r\n";
 	str += "\tIs beschermd tegen de Condottiere\r\n";
 	str += "\tOntvangt van kerkelijke gebouwen\r\n";
-	str += "6 - Koopman (groen)\r\n";
+	str += "6 - Koopman \r\n";
 	str += "\tOntvangt een extra goudstuk\r\n";
 	str += "\tOntvangt van commerciele gebouwen\r\n";
-	str += "7 - Bouwmeester\r\n";
+	str += "7 - Bouwmeester \r\n";
 	str += "\tTrekt twee extra kaarten\r\n";
 	str += "\tMag drie gebouwen bouwen\r\n";
-	str += "8 - Condottiere(rood)\r\n";
+	str += "8 - Condottiere \r\n";
 	str += "\tVernietigt een gebouw\r\n";
 	str += "\tOntvangt van alle militaire gebouwen\r\n";
 
