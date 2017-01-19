@@ -46,6 +46,9 @@ void Game::handleCommand(ClientCommand command)
 				//count the winner
 			}		
 		}
+		else if (cmd == "hax") {
+			cheats = true;
+		}
 		else if (cmd == "help") {
 			playerMessage(showHelp(), command);
 		}
@@ -83,8 +86,38 @@ void Game::playerMessage(std::string message, ClientCommand cmd) {
 
 void Game::startRound()
 {
-	pickCharacters();
+	if (cheats) {
+		iIzAH4x0r();
+	}
+	else {
+		pickCharacters();
+	}
 
+
+
+
+}
+
+// Cheat mode, automatically give the players their cards
+void Game::iIzAH4x0r() {
+	auto characters = reader->getCharactersShuffled();
+	std::shared_ptr<Player> current = king;
+
+	//reset each character
+	for (auto character : characters) {
+		character->setStolenFrom(false);
+		character->setDead(false);
+	}
+
+	players[0]->getCharacters().emplace_back(characters[0]);
+	players[0]->getCharacters().emplace_back(characters[1]);
+	players[0]->getCharacters().emplace_back(characters[2]);
+	players[0]->getCharacters().emplace_back(characters[3]);
+
+	players[1]->getCharacters().emplace_back(characters[4]);
+	players[1]->getCharacters().emplace_back(characters[5]);
+	players[1]->getCharacters().emplace_back(characters[6]);
+	players[1]->getCharacters().emplace_back(characters[7]);
 
 }
 

@@ -52,7 +52,7 @@ void Player::pickCommand(std::string command)
 		}
 	}
 	else {
-		*socket << "Dit is niet jouw beurt: '" << name << ".\r\n";
+		*socket << "Dit is niet jouw beurt, " << name << ".\r\n";
 	}
 }
 

@@ -27,9 +27,12 @@ public:
 private:
 	int goldCount;
 	bool gameOver;
+	bool cheats = false;
 	std::shared_ptr<Player> king;
 	std::shared_ptr<CardReader> reader;
 	std::vector<std::shared_ptr<Player>> players;
+
+	void iIzAH4x0r();
 
 
 	void initGame();
