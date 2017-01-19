@@ -20,6 +20,7 @@ std::vector<std::shared_ptr<CharacterCard>> Player::pickCharacter(std::vector<st
 		availableCharacters.push_back(cards.at(i)->getName());
 	}
 
+	//afleggen
 	messageToShow += "\r\nKies welk karakter je af wilt leggen.\r\n";
 
 	int indexToDelete = toChoose(availableCharacters, messageToShow);
@@ -27,6 +28,18 @@ std::vector<std::shared_ptr<CharacterCard>> Player::pickCharacter(std::vector<st
 	cards.erase(cards.begin() + indexToDelete);
 	availableCharacters.erase(availableCharacters.begin() + indexToDelete);
 
+	//1 kiezen
+	messageToShow = "\r\nKies welk karakter je wilt kiezen\r\n";
+
+	int chosenIndex = toChoose(availableCharacters, messageToShow);
+	
+	addCharacterCard(cards.at(chosenIndex));
+
+	cards.erase(cards.begin() + chosenIndex);
+	availableCharacters.erase(availableCharacters.begin() + chosenIndex);
+
+
+	//overgebleven karakters doorgeven
 	return cards;
 }
 
@@ -34,12 +47,12 @@ int Player::toChoose(std::vector<std::string> availableCharacters, std::string m
 {
 	int userInput;
 	*(this) << "\r\n" << messageToShow << "\r\n";
-
 	for (int i = 0; i < availableCharacters.size(); ++i)
 	{
 		*(this) << std::to_string(i) << ": " << availableCharacters.at(i) << "\r\n";
 	}
 
+	//BUG, registreert na 1x fout de input niet meer..
 	bool picked = false;
 	while (!picked) {
 		userInput = std::stoi(socket->readline());
