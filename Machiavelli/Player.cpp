@@ -61,6 +61,16 @@ bool Player::isPlayerBusy()
 	return _busyPlayer;
 }
 
+bool Player::hasCharacter(std::shared_ptr<CharacterCard> character)
+{
+	for each (auto character in this->characterCards)
+	{
+		if (character == character)
+			return true;
+	}
+	return false;
+}
+
 void Player::turnWith(std::shared_ptr<CharacterCard> character)
 {
 	*this << this->get_name() << ", het is jouw beurt! Je bent een " << character->getName() << "\n";
@@ -68,7 +78,6 @@ void Player::turnWith(std::shared_ptr<CharacterCard> character)
 	//TODO: Options to choose a turn
 
 }
-
 
 void Player::setPlayerBusy(bool value)
 {

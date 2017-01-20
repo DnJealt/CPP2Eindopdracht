@@ -86,6 +86,8 @@ void Game::playerMessage(std::string message, ClientCommand cmd) {
 
 void Game::startRound()
 {
+	globalMessage("Een nieuwe ronde staat op het punt te beginnen!\n");
+
 	if (cheats) {
 		iIzAH4x0r();
 	}
@@ -95,8 +97,6 @@ void Game::startRound()
 
 
 	doTurn();
-
-
 }
 
 // Cheat mode, automatically give the players their cards
@@ -199,9 +199,40 @@ void Game::pickCharacters()
 }
 
 void Game::doTurn() {
-	for each(auto player in this->players) {
-		for each(auto character in player->getCharacters()) {
-			player->turnWith(character);
+	auto characters = reader->getCharactersInOrder();
+
+	for each (auto character in characters) {
+		if (!character->isDead()) {
+			bool isPicked = false;
+			//check welke player karakter is
+			for each (auto currentPlayer in this->players) {
+				if (currentPlayer->hasCharacter(character)) {
+					
+					//wachtende speler vertellen dat andere speler aan de beurt is.
+					auto waitingPlayer = this->waitingPlayer(currentPlayer);
+					*(waitingPlayer) << "Even geduld, " << waitingPlayer->get_name() + " is aan de beurt als " + character->getName() + ".\r\n";
+	
+					//speler beurt laten doen
+					currentPlayer->turnWith(character);
+
+					//zeggen dat character is gepicked
+					isPicked = true;
+
+					//als character koning is player koning maken
+					if (character->getName() == "Koning") {
+						king = currentPlayer;
+					}
+				}
+			}
+
+			//als kaart niet voorkomt bij spelers
+			if (!isPicked) {
+				globalMessage("\r\n" + character->getName() + " is door niemand gekozen\r\n");
+			}
+		}
+		else {
+			globalMessage("\r\n" + character->getName() + " komt niet aan de beurt omdat hij vermoord is\r\n");
+			character->setDead(false);
 		}
 	}
 }

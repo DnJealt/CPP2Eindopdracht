@@ -36,6 +36,7 @@ public:
 	std::vector<std::shared_ptr<CharacterCard>> pickCharacter(std::vector<std::shared_ptr<CharacterCard>> cards);
 	void pickCommand(std::string command);
 	bool isPlayerBusy();
+	bool hasCharacter(std::shared_ptr<CharacterCard> character);
 
 	void turnWith(std::shared_ptr<CharacterCard> character);
 	   	
