@@ -21,6 +21,7 @@ public:
 	void globalMessage(std::string message);
 	void playerMessage(std::string message, ClientCommand cmd);
 	void startRound();
+	void showCurrentStats(Socket& socket);
 
 	std::vector<std::shared_ptr<Player>> getPlayers();
 	std::shared_ptr<Player> waitingPlayer(std::shared_ptr<Player> current);

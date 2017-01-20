@@ -15,8 +15,7 @@ private:
 	Socket& socket;
 	int userInput = -1;
 public:
-	int activate();
+	int createChoices();
 	bool pick(std::string command);
 	Choose(std::string description, std::vector<std::string> choices, Socket& socket);
-	~Choose();
 };

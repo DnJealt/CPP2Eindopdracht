@@ -34,9 +34,11 @@ public:
 	
 	std::string get_name() const { return name; }
 	int get_age() const { return age; }
+	int get_gold() const { return gold; }
 	int amountGold() const { return gold; }
 	std::vector<std::shared_ptr<CharacterCard>> getCharacters();
 	std::vector<std::shared_ptr<BuildingCard>> getBuildings();
+	std::vector<std::shared_ptr<BuildingCard>> getBuildedBuildings();
 	std::vector<std::shared_ptr<CharacterCard>> pickCharacter(std::vector<std::shared_ptr<CharacterCard>> cards);
 	void pickCommand(std::string command);
 	bool hasCharacter(std::shared_ptr<CharacterCard> character);

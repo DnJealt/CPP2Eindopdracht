@@ -100,6 +100,20 @@ void Game::startRound()
 	doTurn();
 }
 
+void Game::showCurrentStats(Socket & socket)
+{
+	for each (auto player in players)
+	{
+		socket << player->get_name() << ":\r\n";
+		socket << "GoudBalans: " << std::to_string(player->get_gold()) << "\r\n";
+		socket << "Gebouwen:\r\n";
+		for each (auto building in player->getBuildedBuildings())
+		{
+			socket << building->getName() << ", " << building->getColor() << ", " << building->getPrice() << "\r\n";
+		}
+	}
+}
+
 std::vector<std::shared_ptr<Player>> Game::getPlayers()
 {
 	return this->players;

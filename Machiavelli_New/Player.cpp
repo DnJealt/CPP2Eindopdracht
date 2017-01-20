@@ -24,9 +24,9 @@ void Player::turnWith(std::shared_ptr<CharacterCard> character)
 	}
 
 	checkForNewGold(character);
-
 	
 	//ontvangt 2 goudstukken || trekt 2 gebouwenkaarten van trekstapel. houd er 1 en neemt die in de hand en legt de andere op de aflegstapel.
+	// gebruik van booleans zodat die keuze maar 1 keer gekozen kan worden.
 	bool ended = false;
 	bool goldOrCards = false;
 	bool specialPower = false;
@@ -62,30 +62,36 @@ void Player::turnWith(std::shared_ptr<CharacterCard> character)
 			choices++;
 		}
 		possibleActions.push_back("Status bekijken");
-		possibleActions.push_back("Stoppen met deze beurt");
+		possibleActions.push_back("Stoppen beurt");
 		choose = std::make_shared<Choose>("maak een keuze", possibleActions, socket);
 
-		int choice = choose->activate();
+		int choice = choose->createChoices();
 
 		if (choice == takeChoice) {
-			goldOrCards = true;
 			//goud of kaarten pakken.
+			goldOrCards = true;
+			//TODO: make method
 		}
 		else if (choice == buildChoice) {
 			// build a building
+			// TODO: make method
 		}
-		else if (choice == propertyChoice) {
+		else if (choice == propertyChoice) {		
 			//use special power
+			// TODO: make method
 			specialPower = true;
 		}
 		else if (choice == choices) {
 			//show status
+			game->showCurrentStats(socket);
 		}
 		else if (choice == choices + 1) {
+			// turn will end
 			ended = true;
 		}		
 	}	
 }
+
 
 std::vector<std::shared_ptr<CharacterCard>> Player::getCharacters()
 {
@@ -95,6 +101,11 @@ std::vector<std::shared_ptr<CharacterCard>> Player::getCharacters()
 std::vector<std::shared_ptr<BuildingCard>> Player::getBuildings()
 {
 	return this->buildingCards;
+}
+
+std::vector<std::shared_ptr<BuildingCard>> Player::getBuildedBuildings()
+{
+	return this->buildedBuildings;
 }
 
 std::vector<std::shared_ptr<CharacterCard>> Player::pickCharacter(std::vector<std::shared_ptr<CharacterCard>> cards)
@@ -113,7 +124,7 @@ std::vector<std::shared_ptr<CharacterCard>> Player::pickCharacter(std::vector<st
 	messageToShow += "\r\nKies welk karakter je af wilt leggen.\r\n";
 
 	choose = std::make_shared<Choose>(messageToShow, availableCharacters, socket);
-	int indexToDelete = choose->activate();
+	int indexToDelete = choose->createChoices();
 
 	cards.erase(cards.begin() + indexToDelete);
 	availableCharacters.erase(availableCharacters.begin() + indexToDelete);
@@ -122,7 +133,7 @@ std::vector<std::shared_ptr<CharacterCard>> Player::pickCharacter(std::vector<st
 	messageToShow = "\r\nKies welk karakter je wilt kiezen\r\n";
 
 	choose = std::make_shared<Choose>(messageToShow, availableCharacters, socket);
-	int chosenIndex = choose->activate();
+	int chosenIndex = choose->createChoices();
 
 	addCharacterCard(cards.at(chosenIndex));
 
