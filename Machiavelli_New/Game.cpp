@@ -1,7 +1,5 @@
 #include "Game.h"
 
-
-
 Game::Game()
 {
 }
@@ -98,8 +96,7 @@ void Game::startRound()
 	else {
 		pickCharacters();
 	}
-
-
+	
 	doTurn();
 }
 
@@ -132,6 +129,7 @@ void Game::doTurn()
 	auto characters = reader->getCharactersInOrder();
 
 	for each (auto character in characters) {
+		//als character dood is moet die overslaan.
 		if (!character->isDead()) {
 			bool isPicked = false;
 			//check welke player karakter is

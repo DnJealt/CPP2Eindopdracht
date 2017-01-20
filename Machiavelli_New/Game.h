@@ -23,6 +23,7 @@ public:
 	void startRound();
 
 	std::vector<std::shared_ptr<Player>> getPlayers();
+	std::shared_ptr<Player> waitingPlayer(std::shared_ptr<Player> current);
 private:	
 	int goldCount;
 	bool gameOver;
@@ -41,6 +42,5 @@ private:
 	void pickCharacters();
 
 	std::string showHelp();
-	std::shared_ptr<Player> waitingPlayer(std::shared_ptr<Player> current);
 };
 

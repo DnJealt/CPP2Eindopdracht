@@ -35,3 +35,13 @@ void CharacterCard::setNumber(int number)
 {
 	this->_number = number;
 }
+
+std::string CharacterCard::getThief()
+{
+	return this->thief;
+}
+
+void CharacterCard::setThief(std::string thiefName)
+{
+	this->thief = thiefName;
+}
