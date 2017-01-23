@@ -31,5 +31,7 @@ public:
 	//buildings
 	std::vector<std::shared_ptr<BuildingCard>> getBuildings();
 	std::shared_ptr<BuildingCard> getBuildingCard();
+	std::vector<std::shared_ptr<BuildingCard>> get2BuildingCards();
 
+	void deleteBuildingCardOnTop();
 };

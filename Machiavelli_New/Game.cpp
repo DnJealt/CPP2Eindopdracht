@@ -1,7 +1,5 @@
 #include "Game.h"
 
-
-
 Game::Game()
 {
 }
@@ -35,7 +33,7 @@ void Game::handleCommand(ClientCommand command)
 		if (cmd == "start") {
 			if (players.size() < 2) {
 				//send message start is not possible
-				globalMessage("\nSorry " + command.get_player()->get_name() + ", maar je moet met 2 spelers zijn.");
+				globalMessage("\n " + command.get_player()->get_name() + ", je moet met 2 spelers zijn om het spel te starten.");
 			}
 			else {
 				//start game
@@ -98,9 +96,22 @@ void Game::startRound()
 	else {
 		pickCharacters();
 	}
-
-
+	
 	doTurn();
+}
+
+void Game::showCurrentStats(Socket & socket)
+{
+	for each (auto player in players)
+	{
+		socket << player->get_name() << ":\r\n";
+		socket << "GoudBalans: " << std::to_string(player->get_gold()) << "\r\n";
+		socket << "Gebouwen:\r\n";
+		for each (auto building in player->getBuildedBuildings())
+		{
+			socket << building->getName() << ", " << building->getColor() << ", " << building->getPrice() << "\r\n";
+		}
+	}
 }
 
 std::vector<std::shared_ptr<Player>> Game::getPlayers()
@@ -132,6 +143,7 @@ void Game::doTurn()
 	auto characters = reader->getCharactersInOrder();
 
 	for each (auto character in characters) {
+		//als character dood is moet die overslaan.
 		if (!character->isDead()) {
 			bool isPicked = false;
 			//check welke player karakter is
@@ -140,7 +152,7 @@ void Game::doTurn()
 
 					//wachtende speler vertellen dat andere speler aan de beurt is.
 					auto waitingPlayer = this->waitingPlayer(currentPlayer);
-					*(waitingPlayer) << "Even geduld, " << waitingPlayer->get_name() + " is aan de beurt als " + character->getName() + ".\r\n";
+					*(waitingPlayer) << "Even geduld, " << currentPlayer->get_name(); +" is aan de beurt als " + character->getName() + ".\r\n";
 
 					//speler beurt laten doen
 					currentPlayer->turnWith(character);
@@ -186,7 +198,7 @@ void Game::initGame()
 		}
 
 		takeGold(player, 2);
-		takeCard(player, 4);
+		takeBuildingCard(player, 4);
 		//give every player 2 gold, and 4 cards
 	}
 
@@ -202,9 +214,9 @@ void Game::takeGold(std::shared_ptr<Player> player, int amount)
 	player->addGold(amount);
 }
 
-void Game::takeCard(std::shared_ptr<Player> player, const int amount)
+void Game::takeBuildingCard(std::shared_ptr<Player> player, const int amount)
 {
-	*(player) << "Je 2 goud gekregen en je hebt de volgende 4 bouwkaarten gepakt:\n";
+	*(player) << "Bouwkaarten gepakt:\n";
 	for (int i = 0; i < amount; i++)
 	{
 		auto card = reader->getBuildingCard();
@@ -236,7 +248,7 @@ void Game::pickCharacters()
 		{
 			if (player != current) {
 				// set next player to do the same and tell player other player is picking				
-				*(player) << "Even geduld, " << current->get_name() << " is karakters aan het kiezen/wegleggen.";
+				*(player) << "Even geduld, " << current->get_name() << " is karakters aan het kiezen/wegleggen.\r\n";
 			}
 		}
 		characters = current->pickCharacter(characters);
@@ -282,9 +294,14 @@ std::shared_ptr<Player> Game::waitingPlayer(std::shared_ptr<Player> current)
 {
 	for each (auto player in players)
 	{
-		if (player != current)
+		if (player->get_name() != current->get_name())
 			return player;
 	}
 
 	return nullptr;
+}
+
+std::shared_ptr<CardReader> Game::getReader()
+{
+	return this->reader;
 }

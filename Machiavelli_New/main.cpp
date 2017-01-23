@@ -88,7 +88,7 @@ void handle_client(Socket client) // this function runs in a separate thread
 		}
 		
 		//create player
-		std::shared_ptr<Player> player{ new Player(name, std::stoi(age), client) };
+		std::shared_ptr<Player> player{ new Player(name, std::stoi(age), client, machiavelli::game) };
 
 		//add player to the game
 		machiavelli::game->addPlayer(player);
