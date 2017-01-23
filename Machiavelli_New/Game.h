@@ -22,9 +22,12 @@ public:
 	void playerMessage(std::string message, ClientCommand cmd);
 	void startRound();
 	void showCurrentStats(Socket& socket);
+	void takeGold(std::shared_ptr<Player> player, const int amount);
+	void takeBuildingCard(std::shared_ptr<Player> player, const int amount);
 
 	std::vector<std::shared_ptr<Player>> getPlayers();
 	std::shared_ptr<Player> waitingPlayer(std::shared_ptr<Player> current);
+	std::shared_ptr<CardReader> getReader();
 private:	
 	int goldCount;
 	bool gameOver;
@@ -38,8 +41,6 @@ private:
 	void doTurn();
 
 	void initGame();
-	void takeGold(std::shared_ptr<Player> player, const int amount);
-	void takeCard(std::shared_ptr<Player> player, const int amount);
 	void pickCharacters();
 
 	std::string showHelp();

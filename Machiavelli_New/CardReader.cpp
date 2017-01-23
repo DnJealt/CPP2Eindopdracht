@@ -63,9 +63,24 @@ std::vector<std::shared_ptr<BuildingCard>> CardReader::getBuildings()
 
 std::shared_ptr<BuildingCard> CardReader::getBuildingCard()
 {
-	auto card = buildings[0];
+	auto card = buildings.at(0);
 	buildings.erase(buildings.begin());
 	return card;
+}
+
+std::vector<std::shared_ptr<BuildingCard>> CardReader::get2BuildingCards()
+{
+	std::vector<std::shared_ptr<BuildingCard>> returnVector;
+
+	returnVector.emplace_back(buildings.at(0));
+	returnVector.emplace_back(buildings.at(1));
+
+	return returnVector;
+}
+
+void CardReader::deleteBuildingCardOnTop()
+{
+	buildings.erase(buildings.begin());
 }
 
 CardReader::~CardReader()

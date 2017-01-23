@@ -55,7 +55,9 @@ private:
 	std::vector<std::shared_ptr<BuildingCard>> buildingCards;
 	std::vector<std::shared_ptr<CharacterCard>> characterCards;
 	std::shared_ptr<Game> game;
+
 	void checkForNewGold(std::shared_ptr<CharacterCard> card);
+	void getCardOrGold();
 };
 
 #endif /* Player_hpp */

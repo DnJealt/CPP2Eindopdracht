@@ -62,15 +62,15 @@ void Player::turnWith(std::shared_ptr<CharacterCard> character)
 			choices++;
 		}
 		possibleActions.push_back("Status bekijken");
-		possibleActions.push_back("Stoppen beurt");
-		choose = std::make_shared<Choose>("maak een keuze", possibleActions, socket);
+		possibleActions.push_back("Stop beurt");
+		choose = std::make_shared<Choose>("Kiesen", possibleActions, socket);
 
 		int choice = choose->createChoices();
 
 		if (choice == takeChoice) {
 			//goud of kaarten pakken.
 			goldOrCards = true;
-			//TODO: make method
+			getCardOrGold();
 		}
 		else if (choice == buildChoice) {
 			// build a building
@@ -183,7 +183,7 @@ void Player::checkForNewGold(std::shared_ptr<CharacterCard> card)
 			{
 				*(this) << "Je ontvangt 1 goudstuk omdat je een gele kaart hebt gebouwd.\r\n";
 				*(game->waitingPlayer(shared_from_this())) << name << "ontvangt een goudstuk voor zijn gebouw\r\n";
-				addGold(1);
+				this->addGold(1);
 			}				
 		}
 	}
@@ -197,7 +197,7 @@ void Player::checkForNewGold(std::shared_ptr<CharacterCard> card)
 			if (building->getColor() == "groen") {
 				*(this) << "Je ontvangt 1 goudstuk omdat een groene kaart hebt gebouwd.\r\n";
 				*(game->waitingPlayer(shared_from_this())) << name << "ontvangt een goudstuk voor zijn gebouw\r\n";
-				addGold(1);
+				this->addGold(1);
 			}
 		}
 	}	
@@ -209,7 +209,7 @@ void Player::checkForNewGold(std::shared_ptr<CharacterCard> card)
 			if (building->getColor() == "blauw") {
 				*(this) << "Je ontvangt 1 goudstuk omdat je een blauwe kaart hebt gebouwd.\r\n";
 				*(game->waitingPlayer(shared_from_this())) << name << "ontvangt een goudstuk voor zijn gebouw\r\n";
-				addGold(1);
+				this->addGold(1);
 			}		
 		}
 	}
@@ -221,8 +221,47 @@ void Player::checkForNewGold(std::shared_ptr<CharacterCard> card)
 			if (building->getColor() == "rood") {
 				*(this) << "Je ontvangt 1 goudstuk omdat je een rode kaart hebt gebouwd.\r\n";
 				*(game->waitingPlayer(shared_from_this())) << name << "ontvangt een goudstuk voor zijn gebouw\r\n";
-				addGold(1);
+				this->addGold(1);
 			}	
 		}
+	}
+}
+
+void Player::getCardOrGold()
+{
+	std::vector<std::string> possibleActions;
+	possibleActions.push_back("2 goudstukken");
+	possibleActions.push_back("2 bouwkaarten, 1 afleggen");
+	choose = std::make_shared<Choose>("kies", possibleActions, socket);
+	int indexToChoose = choose->createChoices();
+
+	if (indexToChoose == 0) {
+		game->takeGold(shared_from_this(), 2);
+		auto waitingPlayer = game->waitingPlayer(shared_from_this());
+		*(waitingPlayer) << this->name << " heeft twee goud gepakt.\r\n";
+	}
+	else if (indexToChoose == 1) {
+		auto possibleActions = game->getReader()->get2BuildingCards();
+		std::vector<std::string> cardNames;
+
+		for each (auto card in possibleActions)
+		{
+			cardNames.push_back(card->getName() + ", " + card->getColor() + ", " + std::to_string(card->getPrice()) + ".");
+		}
+		
+		choose = std::make_shared<Choose>("Kies een kaart (de andere kaart wordt afgelegd)", cardNames, socket);
+		int choice = choose->createChoices();
+
+		if (choice == 0) {		
+			game->takeBuildingCard(shared_from_this(), 1);
+			game->getReader()->deleteBuildingCardOnTop();
+		}
+		else if (choice == 1) {
+			game->getReader()->deleteBuildingCardOnTop();
+			game->takeBuildingCard(shared_from_this(), 1);
+		}
+
+		auto waitingPlayer = game->waitingPlayer(shared_from_this());
+		*(waitingPlayer) << this->name << " heeft 2 kaarten gepakt en een ervan afgelegd.\r\n";
 	}
 }
