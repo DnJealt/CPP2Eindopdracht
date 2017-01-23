@@ -1,4 +1,5 @@
-Debug/
+Debug/*
 x64/
 Machiavelli.VC.db
-Machiavelli/
+Machiavelli/*
+Machiavelli_New/
